@@ -3,6 +3,7 @@
 void Game::initVariables()
 {
 	this->window = nullptr;
+	this->isInMenu = true;
 }
 
 void Game::initWindow() 
@@ -13,20 +14,12 @@ void Game::initWindow()
 	this->window->setFramerateLimit(120);
 }
 
-void Game::initOpponents()
-{
-	//this->opponent.setPosition();
-	this->opponent.setSize(sf::Vector2f(100.f, 100.f));
-	this->opponent.setFillColor(sf::Color::Red);
-	this->opponent.setOutlineColor(sf::Color::Blue);
-	this->opponent.setOutlineThickness(1.f);
-}
 
 Game::Game()
+	: menu(1600, 900) 
 {
 	this->initVariables();
 	this->initWindow();
-	this->initOpponents();
 }
 
 Game::~Game()
@@ -41,20 +34,40 @@ const bool Game::getWindowIsOpen() const
 
 void Game::pollEvents() 
 {
-	while (this->window->pollEvent(this->ev))
-	{
-		switch (this->ev.type)
-		{
-		case sf::Event::Closed:
-			this->window->close();
-			break;
-		case sf::Event::KeyPressed:
-			if (this->ev.key.code == sf::Keyboard::Escape)
-				this->window->close();
-			break;
-		}
-	}
+    while (this->window->pollEvent(this->ev))
+    {
+        switch (this->ev.type)
+        {
+        case sf::Event::Closed:
+            this->window->close();
+            break;
+        case sf::Event::KeyPressed:
+            if (this->ev.key.code == sf::Keyboard::Escape)
+                this->window->close();
 
+            if (isInMenu) {
+                if (this->ev.key.code == sf::Keyboard::Up) {
+                    menu.moveUp();
+                }
+                else if (this->ev.key.code == sf::Keyboard::Down) {
+                    menu.moveDown();
+                }
+                else if (this->ev.key.code == sf::Keyboard::Enter) {
+                    int selectedItem = menu.getSelectedItemIndex();
+                    if (selectedItem == 0) {
+                        isInMenu = false; // Start the game
+                    }
+                    else if (selectedItem == 1) {
+                        // Go to settings (optional implementation)
+                    }
+                    else if (selectedItem == 2) {
+                        window->close();
+                    }
+                }
+            }
+            break;
+        }
+    }
 }
 
 void Game::update()
@@ -66,6 +79,8 @@ void Game::update()
 void Game::render()
 {
 	this->window->clear();
-	this->window->draw(this->opponent);
+    if (isInMenu) {
+        menu.draw(*this->window); // Render menu if in menu mode
+    }
 	this->window->display();
 }

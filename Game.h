@@ -5,16 +5,20 @@
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
+#include "Menu.h"
 
 
 class Game
 {
 private:
 	//Variables
+	bool isInMenu;
+
 	//Window
 	sf::RenderWindow* window;
 	sf::Event ev;
 	sf::VideoMode videoMode;
+	Menu menu;
 
 	//Game objects
 	sf::RectangleShape opponent;
@@ -22,7 +26,6 @@ private:
 	//Private functions
 	void initVariables();
 	void initWindow();
-	void initOpponents();
 
 
 public:
