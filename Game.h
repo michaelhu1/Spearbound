@@ -6,6 +6,7 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Network.hpp>
 #include "Menu.h"
+#include "Player.h"
 
 
 class Game
@@ -13,7 +14,8 @@ class Game
 private:
 	//Variables
 	bool isInMenu;
-
+	Player player1;
+	Player player2;
 	//Window
 	sf::RenderWindow* window;
 	sf::Event ev;
