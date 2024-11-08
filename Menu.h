@@ -25,5 +25,6 @@ private:
     int selectedItemIndex;              // Index of the currently selected menu item
     sf::Font font;                      // Font for menu text
     std::vector<sf::Text> menuItems;    // List of menu items
+    sf::Text title;
 };
 
