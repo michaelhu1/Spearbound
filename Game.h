@@ -21,6 +21,7 @@ private:
 	sf::Event ev;
 	sf::VideoMode videoMode;
 	Menu menu;
+	sf::Clock clock;
 
 	//Game objects
 	sf::RectangleShape opponent;

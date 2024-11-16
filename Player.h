@@ -11,10 +11,12 @@ public:
         sf::Keyboard::Key left;
         sf::Keyboard::Key right;
         sf::Keyboard::Key slash; 
-        sf::Keyboard::Key roll;
-        sf::Keyboard::Key stab; 
+        sf::Keyboard::Key stab;
         sf::Keyboard::Key parry; 
+        sf::Keyboard::Key roll;
     };
+    enum AnimationState { IDLE, WALK, SLASH, ROLL, STAB, PARRY };
+    void setAnimationState(AnimationState newState);
 
     Player(float startx, float starty, float speed, Controls controls);
 
@@ -26,16 +28,30 @@ public:
     void roll();
     void stab();
     void parry();
+
+    void handleInput();
     
-    void update();
+    void update(float deltaTime);
 
  
 private:
     float moveSpeed;
-    sf::CircleShape player;
     Controls controls;
     float hp;
     float stamina;
+
+    sf::Texture texture;
+    sf::Sprite sprite;
+    sf::IntRect currentFrame;
+
+    AnimationState currentState; // Current animation state
+    float animationTimer;
+    float animationSpeed;
+    int frameCount;    // Number of frames in the current animation
+    int frameHeight;   // Height of a single frame
+    int frameWidth;    // Width of a single frame
+
+    void updateAnimation(float deltaTime); // Internal method to update animation frames
 
 };
 
